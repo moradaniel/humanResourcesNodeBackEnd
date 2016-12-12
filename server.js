@@ -1,17 +1,33 @@
+'use strict';
+
 var express = require("express");
 
 
 var logger = require('morgan');
 
-var routes = require('./routes/index'),
+var routes = require('./routes/index');
     //users = require('./api/api1/users')
-    api1 = require('./api/api1/api1');
+
 
 var app = express();
 
 var bodyParser = require('body-parser');
 
-var config = require('./config/main');
+//var config = require('./config/main');
+
+var config = require('./config');
+
+
+var diContainer = require('./dependencyInjection/diContainer');
+
+//diContainer.register('dbName', 'example-db');
+//diContainer.register('tokenSecret', 'SHHH!');
+diContainer.register('dbConfig', config.dbConfig);
+diContainer.factory('db', require('./db/oracle_database'));
+//diContainer.factory('authService', require('./lib/authService'));
+diContainer.factory('userDao', require('./dao/user_dao'));
+diContainer.factory('userService', require('./service/user_service'));
+
 
 var bcrypt = require('bcrypt-nodejs');
 
@@ -33,10 +49,11 @@ app.use(function(req, res, next) {
     next();
 });
 
+var api1 = require('./api/api1/api1');
 
 app.use('/api/v1', api1);
 
-app.listen(3000, function(){
+app.listen(config.port, function(){
     console.log("Server started on port 3000");
     }
 );

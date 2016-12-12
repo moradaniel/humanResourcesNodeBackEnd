@@ -4,9 +4,11 @@ var express = require('express'),
 
 var _ = require('lodash');
 
-var userDao = require('../../dao/users');
-
 var Response = require('../../response/response');
+
+var diContainer = require('../../dependencyInjection/diContainer');
+
+var userService = diContainer.get('userService');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -18,10 +20,11 @@ router.get('/', function(req, res, next) {
     };
 
 
-    userDao.findUsers(userFilter)
+    userService.findUsers(userFilter)
         .then(function(results) {
 
-            var response = new Response(_.values(results));
+            //var response = new Response(_.values(results));
+            var response = new Response(results);
             res.json(response);
         })
         .catch(function(err) {
@@ -40,10 +43,11 @@ router.route('/:id')
             enabled:true
         };
 
-        userDao.findUsers(userFilter)
+        userService.findUsers(userFilter)
             .then(function(results) {
 
-                var response = new Response(_.values(results));
+                //var response = new Response(_.values(results));
+                var response = new Response(results);
                 res.json(response);
             })
             .catch(function(err) {
