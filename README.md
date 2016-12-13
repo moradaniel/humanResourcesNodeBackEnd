@@ -4,7 +4,10 @@
 
 users
 
-## Start backend server:
+```
+## Production
+
+# Start backend server:
 
 ```
 $ export NODE_ENV=production
@@ -21,16 +24,6 @@ $ node ./node_modules/nodemon/bin/nodemon server.js
 ```
 
 
-Install dependencies
-```
-$ npm install --save package
-```
-
-
-Install dev dependencies
-```
-$ npm install --save-dev package
-```
 ## Testing
 
 Run Once Testing
@@ -45,11 +38,21 @@ $ export NODE_ENV=unit_testing
 $ ./node_modules/nodemon/bin/nodemon.js node_modules/mocha/bin/mocha -S --ui bdd  --recursive ./tests --reporter spec
 ```
 
-## Production
 
+Install dependencies
+```
+$ npm install --save package
+```
+
+
+Install dev dependencies
+```
+$ npm install --save-dev package
+```
 
 ## ChangeLog
 
+ - Implemented user password hashing with unit tests
  - Added dependency injection container
  - Added multiple configuration  environments:development,unit_testing,integration_testing,staging,production
  - Added basic unit test infrastructure with Mocha and promise handling
@@ -71,3 +74,5 @@ $ ./node_modules/nodemon/bin/nodemon.js node_modules/mocha/bin/mocha -S --ui bdd
   ## Credits
   
   - Node JWT - http://blog.slatepeak.com/refactoring-a-basic-authenticated-api-with-node-express-and-mongo/
+  - Config - http://eng.datafox.co/nodejs/2014/09/28/nodejs-config-best-practices/
+  - Promises - https://pouchdb.com/2015/05/18/we-have-a-problem-with-promises.html

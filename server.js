@@ -29,7 +29,7 @@ diContainer.factory('userDao', require('./dao/user_dao'));
 diContainer.factory('userService', require('./service/user_service'));
 
 
-var bcrypt = require('bcrypt-nodejs');
+
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
@@ -53,7 +53,7 @@ var api1 = require('./api/api1/api1');
 
 app.use('/api/v1', api1);
 
-app.listen(config.port, function(){
+app.listen(config.server.port, function(){
     console.log("Server started on port 3000");
     }
 );
