@@ -6,30 +6,27 @@ var express = require("express");
 var logger = require('morgan');
 
 var routes = require('./routes/index');
-    //users = require('./api/api1/users')
 
 
 var app = express();
 
 var bodyParser = require('body-parser');
 
-//var config = require('./config/main');
 
 var config = require('./config');
 
-
+/*
 var diContainer = require('./dependencyInjection/diContainer');
 
 //diContainer.register('dbName', 'example-db');
-//diContainer.register('tokenSecret', 'SHHH!');
+diContainer.register('tokenSecretKey', config.JWT.key);
 diContainer.register('dbConfig', config.dbConfig);
 diContainer.factory('db', require('./db/oracle_database'));
 //diContainer.factory('authService', require('./lib/authService'));
 diContainer.factory('userDao', require('./dao/user_dao'));
 diContainer.factory('userService', require('./service/user_service'));
-
-
-
+diContainer.factory('authenticationService', require('./service/security/authenticationService'));
+*/
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
@@ -54,6 +51,8 @@ var api1 = require('./api/api1/api1');
 app.use('/api/v1', api1);
 
 app.listen(config.server.port, function(){
-    console.log("Server started on port 3000");
+    console.log("Server started on port "+config.server.port);
     }
 );
+
+module.exports = app; // for testing

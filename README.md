@@ -4,7 +4,7 @@
 
 users
 
-```
+
 ## Production
 
 # Start backend server:
@@ -32,26 +32,29 @@ $ export NODE_ENV=unit_testing
 $mocha -S --ui bdd  --recursive ./tests --reporter spec
 ```
 
-Continuous Testing
+### Continuous Testing
 ```
 $ export NODE_ENV=unit_testing
 $ ./node_modules/nodemon/bin/nodemon.js node_modules/mocha/bin/mocha -S --ui bdd  --recursive ./tests --reporter spec
 ```
 
 
-Install dependencies
+### Install dependencies
 ```
 $ npm install --save package
 ```
 
 
-Install dev dependencies
+### Install dev dependencies
 ```
 $ npm install --save-dev package
 ```
 
 ## ChangeLog
 
+ - Added JWT token generation
+ - Added in-memory database for unit testing
+ - Added first version of user registration
  - Implemented user password hashing with unit tests
  - Added dependency injection container
  - Added multiple configuration  environments:development,unit_testing,integration_testing,staging,production
@@ -63,16 +66,19 @@ $ npm install --save-dev package
  - Using nodemon for live reloading during development
  
  
- ## TODO
+## TODO
  
   - Add token authentication per request. Use Json Web Tokens (JWT)
-  - Implement unit and integration test infrastructure
+  - Add https/SSL protocol
+  - Implement register and forgot password features
+  - Implement integration test infrastructure
   - Implement logging with development, test, production environment
   - Add Swagger for REST API documentation
   
   
-  ## Credits
+## Credits
   
   - Node JWT - http://blog.slatepeak.com/refactoring-a-basic-authenticated-api-with-node-express-and-mongo/
   - Config - http://eng.datafox.co/nodejs/2014/09/28/nodejs-config-best-practices/
   - Promises - https://pouchdb.com/2015/05/18/we-have-a-problem-with-promises.html
+  

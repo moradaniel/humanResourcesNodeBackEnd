@@ -6,7 +6,7 @@ var _ = require('lodash');
 
 var Response = require('../../response/response');
 
-var diContainer = require('../../dependencyInjection/diContainer');
+var diContainer = require('../../config').diContainer;
 
 var userService = diContainer.get('userService');
 
