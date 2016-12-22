@@ -31,10 +31,14 @@ module.exports = function(userDao) {
         });
     };
 
-    userService.checkPassword = function(guess,user) {
+    userService.checkPassword = function(candidatePassword,user) {
+
+        if(!candidatePassword || !user.password){
+            throw new Error('checkPassword: Not valid arguments');
+        }
 
         return new Promise(function(resolve, reject) {
-            bcrypt.compare(guess, user.password, function (err, areHashEqual) {
+            bcrypt.compare(candidatePassword, user.password, function (err, areHashEqual) {
                 if (err) {
                     console.log("hashing comparison failed: " + err);
                     reject(err);

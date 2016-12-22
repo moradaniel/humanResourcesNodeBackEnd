@@ -2,7 +2,55 @@
 
 ## REST API
 
-users
+**Show User**
+----
+  Returns json data about a single user.
+
+* **URL**
+
+  /users/:id
+
+* **Method:**
+
+  `GET`
+  
+*  **URL Params**
+
+   **Required:**
+ 
+   `id=[integer]`
+
+* **Data Params**
+
+  None
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** `{ id : 12, name : "Michael Bloom" }`
+ 
+* **Error Response:**
+
+  * **Code:** 404 NOT FOUND <br />
+    **Content:** `{ error : "User doesn't exist" }`
+
+  OR
+
+  * **Code:** 401 UNAUTHORIZED <br />
+    **Content:** `{ error : "You are unauthorized to make this request." }`
+
+* **Sample Call:**
+
+  ```javascript
+    $.ajax({
+      url: "/users/1",
+      dataType: "json",
+      type : "GET",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
 
 
 ## Production
@@ -29,7 +77,7 @@ $ node ./node_modules/nodemon/bin/nodemon server.js
 Run Once Testing
 ```
 $ export NODE_ENV=unit_testing
-$mocha -S --ui bdd  --recursive ./tests --reporter spec
+$ mocha -S --ui bdd  --recursive ./tests --reporter spec
 ```
 
 ### Continuous Testing
@@ -50,8 +98,19 @@ $ npm install --save package
 $ npm install --save-dev package
 ```
 
+### Oracle node environment dependencies
+```
+$ export LD_LIBRARY_PATH=/opt/oracle/instantclient_12_1:$LD_LIBRARY_PATH
+$ export OCI_LIB_DIR=/opt/oracle/instantclient_12_1
+$ export OCI_INC_DIR=/opt/oracle/instantclient_12_1/sdk/include/
+
+```
+
+
 ## ChangeLog
 
+ - Added authenticationController.register and authenticationController.login with tests
+ - Added Passport Authentication
  - Added JWT token generation
  - Added in-memory database for unit testing
  - Added first version of user registration
@@ -81,4 +140,5 @@ $ npm install --save-dev package
   - Node JWT - http://blog.slatepeak.com/refactoring-a-basic-authenticated-api-with-node-express-and-mongo/
   - Config - http://eng.datafox.co/nodejs/2014/09/28/nodejs-config-best-practices/
   - Promises - https://pouchdb.com/2015/05/18/we-have-a-problem-with-promises.html
+  - Testing https://scotch.io/tutorials/test-a-node-restful-api-with-mocha-and-chai
   

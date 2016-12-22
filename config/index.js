@@ -33,8 +33,8 @@ diContainer.register('dbConfig', config.dbConfig);
 var db;
 var userDao;
 if(process.env.NODE_ENV=== 'development') {
-    db = require('./db/oracle_database');
-    userDao = require('./dao/user_dao');
+    db = require('../db/oracle_database');
+    userDao = require('../dao/user_dao');
 }else
     if(process.env.NODE_ENV=== 'unit_testing'){
         db = require('../tests/dao/test.db');
@@ -46,7 +46,7 @@ if(process.env.NODE_ENV=== 'development') {
 diContainer.factory('db', db);
 diContainer.factory('userDao', userDao);
 diContainer.factory('userService', require('../service/user_service'));
-diContainer.factory('authenticationService', require('../service/security/authenticationService'));
+diContainer.factory('authenticationController', require('../controller/security/authenticationController'));
 
 
 config.diContainer = diContainer;

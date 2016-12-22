@@ -2,6 +2,7 @@
 
 var _ = require('lodash');
 
+
 module.exports = function() {
 
     var inMemoryDB = {};
@@ -9,23 +10,39 @@ module.exports = function() {
     var nextUserkey=0;
 
     inMemoryDB.init = () =>{
-        inMemoryDB = {};
+        nextUserkey=0;
         inMemoryDB.usersMap = {};
         inMemoryDB.rolesMap = {};
     };
 
     inMemoryDB.clean = function () {
-        inMemoryDB.init();
+        this.init();
     };
 
-    inMemoryDB.findUsers = function (userfilter){
+    inMemoryDB.findUsers = function (userFilter){
 
-        //get valueas from usersMap
+        //get values from usersMap
         var usersArray = _.map(inMemoryDB.usersMap, function(value){
             return value;
         });
 
-        return Promise.resolve(usersArray);
+        var foundUsers = usersArray;
+        if(userFilter) {
+            foundUsers = _.filter(usersArray,
+                function (value) {
+                    //var found = true;
+                    if(userFilter.name && userFilter.name !== value.name){
+                        return false;
+                    }
+                    if(userFilter.enabled && userFilter.enabled !== value.enabled){
+                        return false;
+                    }
+
+                    return true;
+                });
+        }
+
+        return Promise.resolve(foundUsers);
     };
 
     inMemoryDB.saveUser = function (user){

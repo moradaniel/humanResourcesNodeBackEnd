@@ -13,7 +13,12 @@ apiRoutes.use('/users', users);
 
 var diContainer = require('../../dependencyInjection/diContainer');
 
-const authenticationService = diContainer.get("authenticationService");
+const authenticationController = diContainer.get("authenticationController");
+
+// Middleware to require login/auth
+const requireAuth = authenticationController.requireAuth;
+const requireLogin = authenticationController.requireLogin;
+
 
 //= ========================
 // Auth Routes
@@ -25,12 +30,13 @@ const authRoutes = express.Router();
 apiRoutes.use('/auth', authRoutes);
 
 // Registration route
-authRoutes.post('/register', authenticationService.register);
+authRoutes.post('/register', authenticationController.register);
+
+
+// Login route
+authRoutes.post('/login', requireLogin, authenticationController.login);
 
 /*
-// Login route
-authRoutes.post('/login', requireLogin, AuthenticationController.login);
-
 // Password reset request route (generate/send token)
 authRoutes.post('/forgot-password', AuthenticationController.forgotPassword);
 

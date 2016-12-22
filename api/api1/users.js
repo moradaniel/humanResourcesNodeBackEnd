@@ -10,8 +10,11 @@ var diContainer = require('../../config').diContainer;
 
 var userService = diContainer.get('userService');
 
+const authenticationController = diContainer.get("authenticationController");
+const requireAuth = authenticationController.requireAuth;
+
 /* GET users listing. */
-router.get('/', function(req, res, next) {
+router.get('/', requireAuth, function(req, res, next) {
    // res.send('show api options');
 
     var userFilter =    {

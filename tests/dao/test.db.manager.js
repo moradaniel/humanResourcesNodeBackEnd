@@ -24,77 +24,52 @@ case ROLE_CLIENT: role = 2; break;
 case ROLE_MEMBER: role = 1; break;
 */
 
+
+var user_DanielMora = {
+    name: "moradaniel@gmail.com"
+    ,email: "moradaniel@gmail.com"
+    ,password:"password123"
+    ,enabled: true
+    ,roles:[
+        ROLE_ADMIN
+    ]
+};
+
 var user_EstrellaTindle = {
-        name: "estrellaTindle",
-        roles:[
+        name: "estrellatindle@test.com"
+        ,email: "estrellatindle@test.com"
+        ,password:"password1234"
+        ,enabled: true
+        ,roles:[
             ROLE_ADMIN
         ]
 };
-var users = [user_EstrellaTindle];
+
+
+var users = [
+                user_EstrellaTindle
+                ,user_DanielMora
+            ];
 
 
 var User = require('../../model/user');
 
 
-module.exports = (db) => {
+module.exports = (db, userService) => {
     return {
         clean: () => {
             db.clean();
         },
         populate: () => {
-            users.forEach(function(user){
-                db.saveUser(new User(user))
+                var iterations = [];
 
-            })
+                users.forEach(function(user){
+                    iterations.push(userService.saveUser(new User(user)));
+                });
+
+                return Promise.all(iterations).then(function(savedUsers) {
+                    return savedUsers;
+                });
         }
     };
 }
-/*
-module.exports = function(db) {
-
-    var userService = {};
-
-    userService.findUsers = function (userFilter) {
-        return userDao.findUsers(userFilter);
-    };
-
-    userService.saveUser = function(user){
-        var  SALT_FACTOR = 10;
-        return new Promise(function(resolve, reject) {
-            bcrypt.genSalt(SALT_FACTOR, function(err, salt){
-                bcrypt.hash(user.password, salt, null, function(err, hash) {
-                    if (err) {
-                        console.log("hashing the password failed " + err);
-                        reject(err);
-                    }
-                    else {
-                        console.log("hash was successful.");
-                        resolve(hash);
-                    }
-                })
-            })
-        })
-            .then(function(hash){
-                user.password = hash;
-                return userDao.saveUser(user);
-            });
-    };
-
-    userService.checkPassword = function(guess,user) {
-
-        return new Promise(function(resolve, reject) {
-            bcrypt.compare(guess, user.password, function (err, areHashEqual) {
-                if (err) {
-                    console.log("hashing comparison failed: " + err);
-                    reject(err);
-                }
-                else {
-                    resolve(areHashEqual);
-                }
-
-            });
-        });
-    };
-
-    return userService;
-};*/

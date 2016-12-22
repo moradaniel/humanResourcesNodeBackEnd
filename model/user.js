@@ -5,8 +5,10 @@ var privateVariable = true;
 module.exports = User;
 
 function User(data) {
-    this.id = data.id,
+    this.id = data.id;
     this.name = data.name;
+    this.email = data.email;
+    this.enabled = data.enabled;
     this.password = data.password;
     this.roles=data.roles;
 }
